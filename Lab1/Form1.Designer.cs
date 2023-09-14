@@ -42,6 +42,8 @@
             label6 = new Label();
             label7 = new Label();
             label8 = new Label();
+            label9 = new Label();
+            errorLabel = new Label();
             SuspendLayout();
             // 
             // label1
@@ -175,11 +177,31 @@
             label8.TabIndex = 14;
             label8.Text = "Частота D";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(0, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(38, 15);
+            label9.TabIndex = 15;
+            label9.Text = "label9";
+            // 
+            // errorLabel
+            // 
+            errorLabel.AutoSize = true;
+            errorLabel.ForeColor = Color.Red;
+            errorLabel.Location = new Point(321, 426);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(0, 15);
+            errorLabel.TabIndex = 16;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(errorLabel);
+            Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label6);
@@ -217,5 +239,7 @@
         private Label label6;
         private Label label7;
         private Label label8;
+        private Label label9;
+        private Label errorLabel;
     }
 }

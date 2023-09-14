@@ -11,14 +11,36 @@ namespace Lab1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool isNesovmest = radioButton1.Checked;
-            double propabilityA = double.Parse(textBox1.Text) / 100;
-            double propabilityB = double.Parse(textBox2.Text) / 100;
-            double propabilityC = double.Parse(textBox3.Text) / 100;
-            double countTest = double.Parse(textBox4.Text);
+            errorLabel.Text = "";
+            bool isNesovmest = false;
+            double propabilityA = 0;
+            double propabilityB = 0;
+            double propabilityC = 0;
+            double countTest = 0;
 
-            if (isNesovmest == true) Nesovmest(propabilityA, propabilityB, propabilityC, countTest);
-            else Nezavis(propabilityA, propabilityB, propabilityC, countTest);
+            try
+            {
+                isNesovmest = radioButton1.Checked;
+                propabilityA = double.Parse(textBox1.Text);
+                propabilityB = double.Parse(textBox2.Text);
+                propabilityC = double.Parse(textBox3.Text);
+                countTest = double.Parse(textBox4.Text);
+
+                if (isNesovmest == true)
+                {
+                    if (propabilityA + propabilityB + propabilityC > 1) throw new Exception("Сумма вероятностей больше 1");
+                    Nesovmest(propabilityA, propabilityB, propabilityC, countTest);
+                }
+                else 
+                {
+                    if (propabilityA > 1 || propabilityB > 1 || propabilityC > 1) throw new Exception("Одна из вероятностей больше 1");
+                    Nezavis(propabilityA, propabilityB, propabilityC, countTest);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorLabel.Text = ex.Message;
+            }
         }
 
         void Nesovmest(double A, double B = 0, double C = 0, double countTests = 0)
@@ -40,7 +62,7 @@ namespace Lab1
             }
 
             label7.Text = (counter / countTests).ToString();
-            label8.Text = (A+B+C).ToString();
+            label8.Text = (A + B + C).ToString();
         }
 
         void Nezavis(double A, double B = 0, double C = 0, double countTests = 0)
@@ -54,15 +76,17 @@ namespace Lab1
             {
                 a = b = c = false;
                 Random rnd = new Random();
-                double value = rnd.NextDouble();
-                if (value <= A) a = true;
-                if (value <= B) b = true;
-                if (value <= C) c = true;
+                double value = rnd.NextDouble()*A;
+                double value1 = rnd.NextDouble()*B;
+                double value2 = rnd.NextDouble()*C;
+                if (value <= A && value <=B && value <= C) a = true;
+                if (value1 <= A && value1 <= B && value1 <= C) b = true;
+                if (value2 <= A && value2 <= B && value2 <= C) c = true;
                 if (a && b && c) counter++;
             }
 
             label7.Text = (counter / countTests).ToString();
-            label8.Text = (1-(1-A)*(1-B)*(1-C)).ToString();
+            label8.Text = (A * B * C).ToString();
         }
     }
 }
